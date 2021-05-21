@@ -13,5 +13,6 @@ public class Main {
             //每动一下就重新绘制
             f.repaint();
         }
+
     }
 }
