@@ -7,11 +7,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class TFrame extends JFrame {
 
     Trank myTrank = new Trank(200,200,Dir.DOWN,this);
-    Bullet bullet = new Bullet(200,200,Dir.RIGHT);
+    ArrayList<Bullet> bullets =  new ArrayList<Bullet>();
     public static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
     //构造器
@@ -40,7 +41,11 @@ public class TFrame extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         myTrank.paint(g);//画坦克
-        bullet.paint(g);//画子弹
+        //画子弹
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
+        g.drawString("子弹个数"+bullets.size(),50,50);
 
     }
 
