@@ -10,11 +10,14 @@ import java.awt.event.WindowEvent;
 
 public class TFrame extends JFrame {
 
-    Trank myTrank = new Trank(200,200,Dir.DOWN);
+    Trank myTrank = new Trank(200,200,Dir.DOWN,this);
+    Bullet bullet = new Bullet(200,200,Dir.RIGHT);
+    public static final int GAME_WIDTH=800,GAME_HEIGHT=600;
+
     //构造器
     public TFrame() {
         setTitle("坦克大战");
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         //窗口不可改变大小
         setResizable(false);
         //窗口可见
@@ -30,11 +33,14 @@ public class TFrame extends JFrame {
         });
     }
 
+
+
     //画笔
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        myTrank.paint(g);
+        myTrank.paint(g);//画坦克
+        bullet.paint(g);//画子弹
 
     }
 
@@ -64,6 +70,10 @@ public class TFrame extends JFrame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+            //坦克开火发射子弹
+                case KeyEvent.VK_CONTROL:
+                myTrank.fire();
+                break;
             }
             //坦克按下改方向
             setMainTrankDir();

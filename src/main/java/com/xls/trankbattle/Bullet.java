@@ -7,8 +7,8 @@ public class Bullet {
     private int x,y;
     private Dir dir;
     private static final int SPEED = 3;
-    private static final int WIDTH=10;
-    private static final int HEIGHT=10;
+    private static final int WIDTH=30;
+    private static final int HEIGHT=30;
     public Bullet(int x, int y, Dir dir) {
         this.x = x;
         this.y = y;

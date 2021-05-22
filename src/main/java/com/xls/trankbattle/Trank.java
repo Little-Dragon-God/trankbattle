@@ -10,10 +10,12 @@ public class Trank {
     private static final int SPEED = 10;
     //处理坦克静止状态
     private  boolean moving = false;
-    public Trank(int x, int y, Dir dir) {
+    private TFrame tf;
+    public Trank(int x, int y, Dir dir,TFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
     public Dir getDir() {
         return dir;
@@ -55,5 +57,9 @@ public class Trank {
                 break;
 
         }
+    }
+
+    public void fire() {
+        tf.bullet = new Bullet(this.x,this.y,this.dir);
     }
 }
