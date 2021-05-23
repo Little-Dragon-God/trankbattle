@@ -34,6 +34,22 @@ public class TFrame extends JFrame {
             }
         });
     }
+    //消除图片闪烁
+    Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
 
     //画笔
     @Override
@@ -51,7 +67,7 @@ public class TFrame extends JFrame {
         //子弹和敌方坦克碰撞
         for (int i = 0; i < bullets.size(); i++) {
             for (int j = 0; j < enemytanks.size(); j++) {
-                bullets.get(i).collideWith(enemytanks.get(i));
+                bullets.get(i).collideWith(enemytanks.get(j));
             }
         }
         g.drawString("子弹个数"+bullets.size(),50,60);
