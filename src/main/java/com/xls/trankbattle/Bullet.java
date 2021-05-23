@@ -1,15 +1,13 @@
 package com.xls.trankbattle;
 
-import javax.swing.text.LabelView;
-import javax.swing.tree.FixedHeightLayoutCache;
 import java.awt.*;
 
 public class Bullet {
     private int x,y;
     private Dir dir;
-    private static final int SPEED = 3;
-    private static final int WIDTH=30;
-    private static final int HEIGHT=30;
+    private static final int SPEED = 10;
+    public static  int WIDTH = ResourMgr.bulletD.getWidth();
+    public static  int HEIGHT = ResourMgr.bulletD.getHeight();
     private boolean live = true;
     private TFrame tf;
     public Bullet(int x, int y, Dir dir,TFrame tf) {
@@ -21,7 +19,22 @@ public class Bullet {
     public void paint(Graphics g) {
         g.setColor(Color.RED);
         //画子弹
-        g.fillOval(x,y,WIDTH, HEIGHT);
+        //g.fillOval(x,y,WIDTH, HEIGHT);
+        //根据方向画坦克
+        switch (dir){
+            case LEFT:
+                g.drawImage(ResourMgr.bulletL,x,y,null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourMgr.bulletR,x,y,null);
+                break;
+            case UP:
+                g.drawImage(ResourMgr.bulletU,x,y,null);
+                break;
+            case DOWN:
+                g.drawImage(ResourMgr.bulletD,x,y,null);
+                break;
+        }
         //如果子弹不是存活状态就删除
         if (!live)
             tf.bullets.remove(this);

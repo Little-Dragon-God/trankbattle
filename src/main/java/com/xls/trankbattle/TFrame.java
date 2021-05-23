@@ -34,8 +34,6 @@ public class TFrame extends JFrame {
         });
     }
 
-
-
     //画笔
     @Override
     public void paint(Graphics g) {
