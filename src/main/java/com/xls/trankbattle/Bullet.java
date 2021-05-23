@@ -8,7 +8,7 @@ public class Bullet {
     private static final int SPEED = 10;
     public static  int WIDTH = ResourMgr.bulletD.getWidth();
     public static  int HEIGHT = ResourMgr.bulletD.getHeight();
-    private boolean live = true;
+    private boolean living = true;
     private TFrame tf;
     public Bullet(int x, int y, Dir dir,TFrame tf) {
         this.x = x;
@@ -36,7 +36,7 @@ public class Bullet {
                 break;
         }
         //如果子弹不是存活状态就删除
-        if (!live)
+        if (!living)
             tf.bullets.remove(this);
         move();
     }
@@ -58,7 +58,21 @@ public class Bullet {
         }
         //子弹飞出消失
         if (y > tf.getHeight() || y < 0 || x>tf.getWidth() || x<0){
-            live = false;
+            living = false;
         }
+    }
+    //子弹和敌方坦克碰撞方法
+    public void collideWith(Tank tank) {
+        Rectangle rectangle1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);//子弹矩形
+        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        //两个矩形相交
+        if (rectangle1.intersects(rectangle2)){
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.living = false;
     }
 }

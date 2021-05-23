@@ -2,7 +2,9 @@ package com.xls.trankbattle;
 
 import java.awt.*;
 
-public class Trank {
+public class Tank {
+
+
 
     private int x,y;
     //默认向下
@@ -12,12 +14,28 @@ public class Trank {
     public static  int HEIGHT = ResourMgr.tankL.getHeight();
     //处理坦克静止状态
     private  boolean moving = false;
+    private  boolean living = true;
     private TFrame tf;
-    public Trank(int x, int y, Dir dir,TFrame tf) {
+    public Tank(int x, int y, Dir dir, TFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+    }
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     public Dir getDir() {
         return dir;
@@ -37,7 +55,9 @@ public class Trank {
     public void paint(Graphics g) {
         //画矩形
         //g.fillRect(x, y, 50, 50);
-
+        if (!living)
+            //不画死亡状态
+            tf.enemytanks.remove(this);
         //根据方向画坦克
         switch (dir){
             case LEFT:
@@ -77,9 +97,12 @@ public class Trank {
     }
 
     public void fire() {
-        //开火发射子弹的位置：坦克位置+坦克图片的一半-子弹的一半
-        int bX = this.x + Trank.WIDTH/2-Bullet.WIDTH/2;
-        int bY = this.y + Trank.HEIGHT/2-Bullet.HEIGHT/2;
+        int bX = this.x + Tank.WIDTH/2-Bullet.WIDTH/2;
+        int bY = this.y + Tank.HEIGHT/2-Bullet.HEIGHT/2+5;
         tf.bullets.add(new Bullet(bX,bY,this.dir,this.tf));
+    }
+
+    public void die() {
+        this.living = false;
     }
 }

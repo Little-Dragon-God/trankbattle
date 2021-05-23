@@ -1,6 +1,5 @@
 package com.xls.trankbattle;
 
-import javax.lang.model.element.VariableElement;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -11,8 +10,10 @@ import java.util.ArrayList;
 
 public class TFrame extends JFrame {
 
-    Trank myTrank = new Trank(200,200,Dir.DOWN,this);
+    Tank myTank = new Tank(200,200,Dir.DOWN,this);
     ArrayList<Bullet> bullets =  new ArrayList<Bullet>();
+    //敌方坦克
+    ArrayList<Tank> enemytanks = new ArrayList<Tank>();
     public static final int GAME_WIDTH=800,GAME_HEIGHT=600;
 
     //构造器
@@ -38,12 +39,23 @@ public class TFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        myTrank.paint(g);//画坦克
+        myTank.paint(g);//画主坦克
+        //敌方坦克
+        for (int i = 0; i < enemytanks.size(); i++) {
+            enemytanks.get(i).paint(g);
+        }
         //画子弹
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
-        g.drawString("子弹个数"+bullets.size(),50,50);
+        //子弹和敌方坦克碰撞
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int j = 0; j < enemytanks.size(); j++) {
+                bullets.get(i).collideWith(enemytanks.get(i));
+            }
+        }
+        g.drawString("子弹个数"+bullets.size(),50,60);
+        g.drawString("敌方坦克数量"+enemytanks.size(),50,80);
 
     }
 
@@ -75,7 +87,7 @@ public class TFrame extends JFrame {
                     break;
             //坦克开火发射子弹
                 case KeyEvent.VK_CONTROL:
-                myTrank.fire();
+                myTank.fire();
                 break;
             }
             //坦克按下改方向
@@ -109,18 +121,18 @@ public class TFrame extends JFrame {
         private void setMainTrankDir() {
             //坦克静止
             if (!bR&&!bL&&!bD&&!bU)
-                myTrank.setMoving(false);
+                myTank.setMoving(false);
             else {
                 //告诉坦克可以移动
-                myTrank.setMoving(true);
+                myTank.setMoving(true);
             if (bU)
-                myTrank.setDir(Dir.UP);
+                myTank.setDir(Dir.UP);
             if (bD)
-                myTrank.setDir(Dir.DOWN);
+                myTank.setDir(Dir.DOWN);
             if (bL)
-                myTrank.setDir(Dir.LEFT);
+                myTank.setDir(Dir.LEFT);
             if (bR)
-                myTrank.setDir(Dir.RIGHT);
+                myTank.setDir(Dir.RIGHT);
             }
         }
     }
