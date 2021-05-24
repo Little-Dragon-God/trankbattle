@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 public class TFrame extends JFrame {
 
-    Tank myTank = new Tank(200,200,Dir.DOWN,Group.GOOD,this);
+    Tank myTank = new Tank(200,200,Dir.UP,Group.GOOD,this);
+
     ArrayList<Bullet> bullets =  new ArrayList<Bullet>();
     //敌方坦克
     ArrayList<Tank> enemytanks = new ArrayList<Tank>();
@@ -56,7 +57,9 @@ public class TFrame extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        myTank.setSpeed(10);
         myTank.paint(g);//画主坦克
+
         //敌方坦克
         for (int i = 0; i < enemytanks.size(); i++) {
             enemytanks.get(i).paint(g);
@@ -77,7 +80,7 @@ public class TFrame extends JFrame {
         }
         g.drawString("子弹个数"+bullets.size(),50,60);
         g.drawString("敌方坦克数量"+enemytanks.size(),50,80);
-        g.drawString("炸掉坦克数量"+explodes.size(),50,80);
+        g.drawString("炸掉坦克数量"+explodes.size(),50,100);
 
     }
 

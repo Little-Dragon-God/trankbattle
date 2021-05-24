@@ -8,7 +8,7 @@ public class Tank {
     private int x,y;
     //默认向下
     private Dir dir = Dir.DOWN;
-    private static final int SPEED = 3;
+    private static int speed = 5;
     public static  int WIDTH = ResourMgr.tankL.getWidth();
     public static  int HEIGHT = ResourMgr.tankL.getHeight();
     //处理坦克移动状态
@@ -25,6 +25,7 @@ public class Tank {
         this.group = group;
         this.tf = tf;
     }
+
     public int getX() {
         return x;
     }
@@ -39,6 +40,14 @@ public class Tank {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public static int getSpeed() {
+        return speed;
+    }
+
+    public static void setSpeed(int speed) {
+        Tank.speed = speed;
     }
 
     public Group getGroup() {
@@ -87,10 +96,17 @@ public class Tank {
                 g.drawImage(ResourMgr.tankD,x,y,null);
                 break;
         }
-        //坦克自动发射子弹
-        if (random.nextInt(100)>95)
+        //敌方坦克自动发射子弹
+        if (this.group == Group.BAD && random.nextInt(100)>95)
             this.fire();
+        //敌方坦克随机旋转
+        if (this.group == Group.BAD && random.nextInt(100)>95)
+            randomDir();
         moving();
+    }
+
+    private void randomDir() {
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     private void moving() {
@@ -98,16 +114,16 @@ public class Tank {
         //根据方向进行移动
         switch (dir) {
             case UP:
-                y -= SPEED;
+                y -= speed;
                 break;
             case DOWN:
-                y += SPEED;
+                y += speed;
                 break;
             case RIGHT:
-                x += SPEED;
+                x += speed;
                 break;
             case LEFT:
-                x -= SPEED;
+                x -= speed;
                 break;
 
         }
