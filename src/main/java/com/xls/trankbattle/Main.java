@@ -7,6 +7,7 @@ import java.awt.event.WindowListener;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         TFrame f = new TFrame();
+        TPanel tPanel = new TPanel(f);
         int initTankCount = Integer.parseInt((String) PropertiesMgr.get("initTankCount")) ;
         //初始化敌方坦克
         for (int i = 0; i < initTankCount; i++) {

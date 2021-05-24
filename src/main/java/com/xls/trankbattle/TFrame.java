@@ -1,6 +1,5 @@
 package com.xls.trankbattle;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-public class TFrame extends JFrame {
+public class TFrame extends Frame {
 
     Tank myTank = new Tank(200,200,Dir.UP,Group.GOOD,this);
 
@@ -38,7 +37,6 @@ public class TFrame extends JFrame {
     }
     //消除图片闪烁
     Image offScreenImage = null;
-
     @Override
     public void update(Graphics g) {
         if (offScreenImage == null) {
@@ -53,11 +51,12 @@ public class TFrame extends JFrame {
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
+
     //画笔
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        myTank.setSpeed(10);
+
         myTank.paint(g);//画主坦克
 
         //敌方坦克
@@ -78,9 +77,9 @@ public class TFrame extends JFrame {
         for (int i = 0; i < explodes.size(); i++) {
             explodes.get(i).paint(g);
         }
-        g.drawString("子弹个数"+bullets.size(),50,60);
-        g.drawString("敌方坦克数量"+enemytanks.size(),50,80);
-        g.drawString("炸掉坦克数量"+explodes.size(),50,100);
+        g.drawString("子弹个数"+bullets.size(),40,60);
+        g.drawString("敌方坦克数量"+enemytanks.size(),40,80);
+        g.drawString("炸掉坦克数量"+explodes.size(),40,100);
 
     }
 
