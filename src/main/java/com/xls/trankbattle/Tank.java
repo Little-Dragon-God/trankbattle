@@ -9,8 +9,8 @@ public class Tank {
     //默认向下
     private Dir dir = Dir.DOWN;
     private static int speed = 5;
-    public static  int WIDTH = ResourMgr.tankL.getWidth();
-    public static  int HEIGHT = ResourMgr.tankL.getHeight();
+    public static  int WIDTH = ResourMgr.goodTankL.getWidth();
+    public static  int HEIGHT = ResourMgr.goodTankL.getHeight();
     //处理坦克移动状态
     private  boolean moving = true;
     private  boolean living = true;//存活状态
@@ -84,25 +84,34 @@ public class Tank {
         //根据方向画坦克
         switch (dir){
             case LEFT:
-                g.drawImage(ResourMgr.tankL,x,y,null);
+                g.drawImage(this.group==Group.BAD ? ResourMgr.badTankL :ResourMgr.goodTankL,x,y,null);
                 break;
             case RIGHT:
-                g.drawImage(ResourMgr.tankR,x,y,null);
+                g.drawImage(this.group==Group.BAD ? ResourMgr.badTankR :ResourMgr.goodTankR,x,y,null);
                 break;
             case UP:
-                g.drawImage(ResourMgr.tankU,x,y,null);
+                g.drawImage(this.group==Group.BAD ? ResourMgr.badTankU :ResourMgr.goodTankU,x,y,null);
                 break;
             case DOWN:
-                g.drawImage(ResourMgr.tankD,x,y,null);
+                g.drawImage(this.group==Group.BAD ? ResourMgr.badTankD :ResourMgr.goodTankD,x,y,null);
                 break;
         }
         //敌方坦克自动发射子弹
-        if (this.group == Group.BAD && random.nextInt(100)>95)
+        if (this.group == Group.BAD && random.nextInt(100)>85)
             this.fire();
         //敌方坦克随机旋转
-        if (this.group == Group.BAD && random.nextInt(100)>95)
+        if (this.group == Group.BAD && random.nextInt(100)>70)
             randomDir();
+        //碰撞检测
+        boundsCheck();
         moving();
+    }
+
+    private void boundsCheck() {
+        if (this.x<3) x=3;
+        if (this.y<30) y=30;
+        if (this.x>TFrame.GAME_WIDTH - Tank.WIDTH-2) x = TFrame.GAME_WIDTH - Tank.WIDTH-2;
+        if (this.y>TFrame.GAME_HEIGHT - Tank.HEIGHT-2) y = TFrame.GAME_HEIGHT - Tank.HEIGHT-2;
     }
 
     private void randomDir() {

@@ -68,13 +68,15 @@ public class Bullet {
         //队友射中无效
         if (this.group == tank.getGroup()) return;
         Rectangle rectangle1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);//子弹矩形
-        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
+        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);//坦克矩形
         //两个矩形相交
         if (rectangle1.intersects(rectangle2)){
             tank.die();
             this.die();
+            int ex = tank.getX()+Tank.WIDTH/2-Explodes.WIDTH/2;
+            int ey = tank.getY()+Tank.HEIGHT/2-Explodes.HEIGHT/2;
             //爆炸检测
-            tf.explodes.add(new Explodes(x,y,tf));
+            tf.explodes.add(new Explodes(ex,ey,tf));
         }
     }
 
