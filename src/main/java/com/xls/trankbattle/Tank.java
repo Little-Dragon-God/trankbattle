@@ -88,7 +88,7 @@ public class Tank {
                 break;
         }
         //坦克自动发射子弹
-        if (random.nextInt(10)>8)
+        if (random.nextInt(100)>95)
             this.fire();
         moving();
     }
