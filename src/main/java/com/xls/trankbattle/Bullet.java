@@ -5,6 +5,7 @@ import java.awt.*;
 public class Bullet {
     private int x,y;
     private Dir dir;
+    Rectangle rectangle = new Rectangle();
     private static final int SPEED = 10;
     public static  int WIDTH = ResourMgr.bulletD.getWidth();
     public static  int HEIGHT = ResourMgr.bulletD.getHeight();
@@ -17,6 +18,10 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
     }
     public void paint(Graphics g) {
         //g.setColor(Color.RED);
@@ -58,6 +63,9 @@ public class Bullet {
                 x -= SPEED;
                 break;
         }
+        //更新子弹的移动
+        rectangle.x = this.x;
+        rectangle.y = this.y;
         //子弹飞出消失
         if (y > tf.getHeight() || y < 0 || x>tf.getWidth() || x<0){
             living = false;
@@ -67,10 +75,9 @@ public class Bullet {
     public void collideWith(Tank tank) {
         //队友射中无效
         if (this.group == tank.getGroup()) return;
-        Rectangle rectangle1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);//子弹矩形
-        Rectangle rectangle2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);//坦克矩形
+
         //两个矩形相交
-        if (rectangle1.intersects(rectangle2)){
+        if (rectangle.intersects(tank.rectangle)){
             tank.die();
             this.die();
             int ex = tank.getX()+Tank.WIDTH/2-Explodes.WIDTH/2;

@@ -15,6 +15,7 @@ public class Tank {
     private  boolean moving = true;
     private  boolean living = true;//存活状态
     private Random random = new Random();
+    Rectangle rectangle = new Rectangle();
     //区分子弹是谁的
     private Group group = Group.BAD;
     private TFrame tf;
@@ -24,6 +25,11 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        rectangle.x = this.x;
+        rectangle.y = this.y;
+        rectangle.width = WIDTH;
+        rectangle.height = HEIGHT;
+
     }
 
     public int getX() {
@@ -102,6 +108,9 @@ public class Tank {
         //敌方坦克随机旋转
         if (this.group == Group.BAD && random.nextInt(100)>70)
             randomDir();
+        //更新子弹的移动
+        rectangle.x = this.x;
+        rectangle.y = this.y;
         //碰撞检测
         boundsCheck();
         moving();
