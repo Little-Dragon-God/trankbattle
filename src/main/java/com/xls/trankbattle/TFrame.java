@@ -14,8 +14,9 @@ public class TFrame extends JFrame {
     ArrayList<Bullet> bullets =  new ArrayList<Bullet>();
     //敌方坦克
     ArrayList<Tank> enemytanks = new ArrayList<Tank>();
+    //坦克击中爆炸
+    ArrayList<Explodes> explodes = new ArrayList<>();
     public static final int GAME_WIDTH=800,GAME_HEIGHT=600;
-    Explodes e = new Explodes(100,300,this);
     //构造器
     public TFrame() {
         setTitle("坦克大战");
@@ -70,9 +71,13 @@ public class TFrame extends JFrame {
                 bullets.get(i).collideWith(enemytanks.get(j));
             }
         }
-        e.paint(g);//画爆炸
+       //画爆炸
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
         g.drawString("子弹个数"+bullets.size(),50,60);
         g.drawString("敌方坦克数量"+enemytanks.size(),50,80);
+        g.drawString("炸掉坦克数量"+explodes.size(),50,80);
 
     }
 
